@@ -124,10 +124,14 @@ body {
   border-bottom: 1px solid var(--border-light);
   transition: background-color var(--anim-normal) ease, border-color var(--anim-normal) ease;
   margin-bottom: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
 }
 
 html[data-bs-theme="dark"] .navbar {
-  background-color: #1e293b;
+  background-color: rgba(30, 41, 59, 0.95);
   border-bottom: 1px solid #334155;
 }
 
