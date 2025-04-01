@@ -1,5 +1,5 @@
 /**
- * Studybase - Modern Learning Roadmap
+ * Beacon - Modern Learning Roadmap
  * 
  * A completely new, ultra-minimal implementation of the learning roadmap
  * with modern animations and a grid-based layout.

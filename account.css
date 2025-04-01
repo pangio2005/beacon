@@ -677,8 +677,7 @@
   background-color: rgba(79, 70, 229, 0.2);
 }
 
-/* Studybase Card Section */
-.studybase-card-section {
+.beacon-card-section {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -695,7 +694,7 @@
   color: var(--text-primary-dark);
 }
 
-.studybase-card {
+.beacon-card {
   position: relative;
   background-color: var(--card-bg-light);
   border-radius: var(--radius-lg);
@@ -709,7 +708,7 @@
   width: 100%;
 }
 
-[data-bs-theme="dark"] .studybase-card {
+[data-bs-theme="dark"] .beacon-card {
   background-color: rgba(30, 41, 59, 0.8);
   border-color: #334155;
   color: var(--text-primary-dark);
@@ -902,7 +901,7 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .studybase-card {
+  .beacon-card {
     grid-template-columns: 1fr;
     padding: var(--spacing-md);
     gap: var(--spacing-md);
@@ -927,7 +926,7 @@
 }
 
 /* Color Theme Styles */
-[data-color-theme="red"] .studybase-card {
+[data-color-theme="red"] .beacon-card {
   border-color: #ef4444;
   box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06);
 }
@@ -947,7 +946,7 @@
   box-shadow: 0 0 0 2px #ef4444;
 }
 
-[data-color-theme="blue"] .studybase-card {
+[data-color-theme="blue"] .beacon-card {
   border-color: #3b82f6;
   box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06);
 }
@@ -967,7 +966,7 @@
   box-shadow: 0 0 0 2px #3b82f6;
 }
 
-[data-color-theme="green"] .studybase-card {
+[data-color-theme="green"] .beacon-card {
   border-color: #22c55e;
   box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.1), 0 2px 4px -1px rgba(34, 197, 94, 0.06);
 }
@@ -987,7 +986,7 @@
   box-shadow: 0 0 0 2px #22c55e;
 }
 
-[data-color-theme="yellow"] .studybase-card {
+[data-color-theme="yellow"] .beacon-card {
   border-color: #eab308;
   box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.1), 0 2px 4px -1px rgba(234, 179, 8, 0.06);
 }
@@ -1007,7 +1006,7 @@
   box-shadow: 0 0 0 2px #eab308;
 }
 
-[data-color-theme="purple"] .studybase-card {
+[data-color-theme="purple"] .beacon-card {
   border-color: #a855f7;
   box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.1), 0 2px 4px -1px rgba(168, 85, 247, 0.06);
 }
@@ -1027,7 +1026,7 @@
   box-shadow: 0 0 0 2px #a855f7;
 }
 
-[data-color-theme="pink"] .studybase-card {
+[data-color-theme="pink"] .beacon-card {
   border-color: #ec4899;
   box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.1), 0 2px 4px -1px rgba(236, 72, 153, 0.06);
 }
@@ -1048,27 +1047,27 @@
 }
 
 /* Dark mode color theme adjustments */
-[data-bs-theme="dark"][data-color-theme="red"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="red"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2), 0 2px 4px -1px rgba(239, 68, 68, 0.1);
 }
 
-[data-bs-theme="dark"][data-color-theme="blue"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="blue"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(59, 130, 246, 0.1);
 }
 
-[data-bs-theme="dark"][data-color-theme="green"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="green"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(34, 197, 94, 0.2), 0 2px 4px -1px rgba(34, 197, 94, 0.1);
 }
 
-[data-bs-theme="dark"][data-color-theme="yellow"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="yellow"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(234, 179, 8, 0.2), 0 2px 4px -1px rgba(234, 179, 8, 0.1);
 }
 
-[data-bs-theme="dark"][data-color-theme="purple"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="purple"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(168, 85, 247, 0.2), 0 2px 4px -1px rgba(168, 85, 247, 0.1);
 }
 
-[data-bs-theme="dark"][data-color-theme="pink"] .studybase-card {
+[data-bs-theme="dark"][data-color-theme="pink"] .beacon-card {
   box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.2), 0 2px 4px -1px rgba(236, 72, 153, 0.1);
 }
 

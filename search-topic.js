@@ -1,5 +1,5 @@
 /**
- * studybase - modern animations and effects
+ * beacon - modern animations and effects
  * enhances the page with scroll-triggered animations and effects
  */
 
