@@ -43,22 +43,23 @@ document.addEventListener("DOMContentLoaded", () => {
       await signInWithEmailAndPassword(auth, emailToUse, password);
       window.location.href = "search-topic.html";
 
-    } catch (error) {
-      const errorCode = error.code;
-      let errorMessage = "Please check your login details and try again";
+    } 
+    
+    catch (error) {
+      let errorMessage = "Please check your login details and try again.";
 
-      switch (errorCode) {
+      switch (error.code) {
         case 'auth/user-not-found':
-          errorMessage = "Account not found";
+          errorMessage = "Account not found.";
           break;
         case 'auth/wrong-password':
-          errorMessage = "Incorrect password";
+          errorMessage = "Incorrect password.";
           break;
         case 'auth/invalid-email':
-          errorMessage = "Please enter a valid email";
+          errorMessage = "Please enter a valid email.";
           break;
         default:
-          errorMessage = "Unable to sign in";
+          errorMessage = error.message;
       }
 
       signInMessage.style.display = 'block';

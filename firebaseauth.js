@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, getDocs, setDoc, query, where } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-storage.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -47,18 +46,6 @@ async function handleRegistration(e) {
   successMessage.style.color = "black";
   
   try {
-    // First check if username already exists
-    const usersRef = collection(db, "users");
-    const usernameQuery = query(usersRef, where("username", "==", username));
-    const usernameSnapshot = await getDocs(usernameQuery);
-    
-    if (!usernameSnapshot.empty) {
-      successMessage.textContent = "Username already taken";
-      successMessage.style.color = "red";
-      successMessage.style.display = "block";
-      return;
-    }
-
     // Create user in Firebase Auth
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
@@ -70,15 +57,7 @@ async function handleRegistration(e) {
       email: email,
       createdAt: new Date(),
       role: "Student",
-      preferences: {
-        darkMode: false,
-        anonymousMode: false
-      },
-      notifications: {
-        email: true,
-        quizReminders: true,
-        newFeatures: true
-      }
+      password: password
     });
     
     successMessage.textContent = "Account created! Redirecting to login...";
@@ -89,22 +68,24 @@ async function handleRegistration(e) {
       window.location.href = "index.html";
     }, 2000);
     
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error("Error creating account:", error);
-    let errorMessage = "Unable to create account";
+    let errorMessage = "Unable to create account. Please try again.";
     
     switch (error.code) {
       case 'auth/email-already-in-use':
-        errorMessage = "Email already registered";
+        errorMessage = "Email already registered. Please use a different email.";
         break;
       case 'auth/invalid-email':
-        errorMessage = "Please enter a valid email";
+        errorMessage = "Please enter a valid email.";
         break;
       case 'auth/weak-password':
-        errorMessage = "Password must be at least 6 characters";
+        errorMessage = "Password must be at least 6 characters.";
         break;
       default:
-        errorMessage = "Unable to create account";
+        errorMessage = error.message;
     }
     
     successMessage.textContent = errorMessage;
@@ -121,15 +102,6 @@ onAuthStateChanged(auth, async (user) => {
       
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        
-        // Update profile photo if available
-        if (userData.photoURL) {
-          const profileImages = document.querySelectorAll('img[alt="Profile"]');
-          profileImages.forEach(img => {
-            img.src = userData.photoURL;
-          });
-        }
-        
         const username = userData.username || "Not set";
         
         // Update UI elements if they exist
@@ -137,6 +109,8 @@ onAuthStateChanged(auth, async (user) => {
         const profileNameElement = document.getElementById("profileName");
         const dateCreatedElement = document.getElementById("dateCreated");
         const universityElement = document.getElementById("university");
+        const passwordElement = document.getElementById("password");
+        const majorElement = document.getElementById("major");
         const emailElement = document.getElementById("email");
         const profileEmailElement = document.getElementById("profileEmail");
         const lastLoginElement = document.getElementById("lastLogin");
@@ -145,8 +119,10 @@ onAuthStateChanged(auth, async (user) => {
         if (accountNameElement) accountNameElement.textContent = username;
         if (profileNameElement) profileNameElement.textContent = username;
         if (universityElement) universityElement.textContent = userData.university || "Not set";
+        if (majorElement) majorElement.textContent = userData.major || "Not set";
         if (emailElement) emailElement.textContent = user.email;
         if (profileEmailElement) profileEmailElement.textContent = user.email;
+        if (passwordElement) passwordElement.value = "password";
         
         if (accountTab) {
           accountTab.textContent = username;
@@ -167,8 +143,6 @@ onAuthStateChanged(auth, async (user) => {
             hour: '2-digit', minute: '2-digit'
           });
         }
-        
-        loadUserPreferences(userData);
       } 
       
       else {
@@ -188,46 +162,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// Functions for user profile and preferences
-function loadUserPreferences(userData) {
-  const darkModePreference = document.getElementById("darkModePreference");
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  const anonymousMode = document.getElementById("anonymousMode");
-  const emailNotifications = document.getElementById("emailNotifications");
-  const quizReminders = document.getElementById("quizReminders");
-  const newFeatures = document.getElementById("newFeatures");
-  
-  if (userData.preferences) {
-    if (userData.preferences.hasOwnProperty('darkMode') && darkModePreference && darkModeToggle) {
-      darkModePreference.checked = userData.preferences.darkMode;
-      darkModeToggle.checked = userData.preferences.darkMode;
-      
-      if (userData.preferences.darkMode) {
-        document.body.classList.add('dark-mode');
-      } else {
-        document.body.classList.remove('dark-mode');
-      }
-    }
-    
-    if (userData.preferences.hasOwnProperty('anonymousMode') && anonymousMode) {
-      anonymousMode.checked = userData.preferences.anonymousMode;
-    }
-  }
-
-  if (userData.notifications) {
-    if (userData.notifications.hasOwnProperty('email') && emailNotifications) {
-      emailNotifications.checked = userData.notifications.email;
-    }
-    
-    if (userData.notifications.hasOwnProperty('quizReminders') && quizReminders) {
-      quizReminders.checked = userData.notifications.quizReminders;
-    }
-    
-    if (userData.notifications.hasOwnProperty('newFeatures') && newFeatures) {
-      newFeatures.checked = userData.notifications.newFeatures;
-    }
-  }
-}
 
 function setDefaultValues() {
   const user = auth.currentUser;
@@ -241,6 +175,8 @@ function setDefaultValues() {
   const universityElement = document.getElementById("university");
   const emailElement = document.getElementById("email");
   const profileEmailElement = document.getElementById("profileEmail");
+  const passwordElement = document.getElementById("password");
+
   const lastLoginElement = document.getElementById("lastLogin");
   const accountTab = document.getElementById("accountTab");
   
@@ -258,6 +194,10 @@ function setDefaultValues() {
     hour: '2-digit', minute: '2-digit'
   });
   
+  if (passwordElement) {
+    passwordElement.value = "password";
+  }
+
   if (accountTab) {
     accountTab.textContent = username;
   }
@@ -367,47 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  // Photo upload handler
-  const changePhotoForm = document.getElementById("changePhotoForm");
-  if (changePhotoForm) {
-    changePhotoForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const fileInput = document.getElementById("newPhoto");
-      const file = fileInput.files[0];
-
-      if (!file) {
-        alert("Please select a file first");
-        return;
-      }
-
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          const storage = getStorage();
-          const storageRef = ref(storage, `profile_photos/${user.uid}`);
-          await uploadBytes(storageRef, file);
-          const photoURL = await getDownloadURL(storageRef);
-          
-          // Update user profile with new image URL
-          await updateUserProfile(user.uid, { photoURL: photoURL });
-
-          // Update all profile images on the page
-          const profileImages = document.querySelectorAll('img[alt="Profile"]');
-          profileImages.forEach(img => {
-            img.src = photoURL;
-          });
-
-          const modal = bootstrap.Modal.getInstance(document.getElementById('changePhotoModal'));
-          if (modal) modal.hide();
-          changePhotoForm.reset();
-        }
-      } catch (error) {
-        console.error("Error uploading profile photo:", error);
-        alert("Failed to upload photo. Please try again.");
-      }
-    });
-  }
   
   // Logout button
   const logoutButton = document.querySelector(".btn-danger");
@@ -418,48 +317,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "index.html";
       } catch (error) {
         console.error("Error signing out:", error);
-      }
-    });
-  }
-
-  // Save preferences button
-  const savePreferencesBtn = document.getElementById("savePreferencesBtn");
-  const darkModePreference = document.getElementById("darkModePreference");
-  const anonymousMode = document.getElementById("anonymousMode");
-  const emailNotifications = document.getElementById("emailNotifications");
-  const quizReminders = document.getElementById("quizReminders");
-  const newFeatures = document.getElementById("newFeatures");
-  
-  if (savePreferencesBtn && darkModePreference && anonymousMode && 
-      emailNotifications && quizReminders && newFeatures) {
-      
-    savePreferencesBtn.addEventListener('click', async () => {
-      try {
-        const user = auth.currentUser;
-        if (user) {
-          const preferencesData = {
-            preferences: {
-              darkMode: darkModePreference.checked,
-              anonymousMode: anonymousMode.checked
-            },
-            notifications: {
-              email: emailNotifications.checked,
-              quizReminders: quizReminders.checked,
-              newFeatures: newFeatures.checked
-            }
-          };
-          await updateUserProfile(user.uid, preferencesData);
-          const darkModeToggle = document.getElementById("darkModeToggle");
-          
-          if (darkModePreference.checked) {
-            enableDarkMode();
-          } else {
-            disableDarkMode();
-          }
-          if (darkModeToggle) darkModeToggle.checked = darkModePreference.checked;
-        }
-      } catch (error) {
-        console.error("Error saving preferences:", error);
       }
     });
   }
