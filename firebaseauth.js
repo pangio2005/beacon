@@ -57,7 +57,8 @@ async function handleRegistration(e) {
       email: email,
       createdAt: new Date(),
       role: "Student",
-      password: password
+      password: password,
+      bio : ""
     });
     
     successMessage.textContent = "Account created! Redirecting to login...";
