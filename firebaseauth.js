@@ -3,14 +3,14 @@ import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, u
 import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, getDocs, setDoc, query, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
 
-// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAjvShhWqOBIrgero2ODtQQtSzWuafmGJw",
-  authDomain: "studybase-data.firebaseapp.com",
-  projectId: "studybase-data",
-  storageBucket: "studybase-data.firebasestorage.app",
-  messagingSenderId: "471482464641",
-  appId: "1:471482464641:web:46fe6cf41e17a24e785080"
+  apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
+  authDomain: "beacon-73ff8.firebaseapp.com",
+  projectId: "beacon-73ff8",
+  storageBucket: "beacon-73ff8.firebasestorage.app",
+  messagingSenderId: "398593009531",
+  appId: "1:398593009531:web:09358faa7409fa38743fde",
+  measurementId: "G-9RLHSZPCKR"
 };
 
 // Initialize Firebase services
