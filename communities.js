@@ -1,22 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, where, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-  authDomain: "beacon-73ff8.firebaseapp.com",
-  projectId: "beacon-73ff8",
-  storageBucket: "beacon-73ff8.firebasestorage.app",
-  messagingSenderId: "398593009531",
-  appId: "1:398593009531:web:09358faa7409fa38743fde",
-  measurementId: "G-9RLHSZPCKR"
-};
-
-// Initialize Firebase services
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+import { auth, db } from './firebaseconfig.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // Global variables
 let currentUser = null;
