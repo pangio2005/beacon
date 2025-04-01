@@ -1,17 +1,19 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, getDocs, setDoc, query, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-analytics.js";
 
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-  authDomain: "beacon-73ff8.firebaseapp.com",
-  projectId: "beacon-73ff8",
-  storageBucket: "beacon-73ff8.firebasestorage.app",
-  messagingSenderId: "398593009531",
-  appId: "1:398593009531:web:09358faa7409fa38743fde",
-  measurementId: "G-9RLHSZPCKR"
+  apiKey: "AIzaSyC6S_-Chou9YqPq7w1u-opm6cdd4W0gCXY",
+  authDomain: "beacon-pa05.firebaseapp.com",
+  projectId: "beacon-pa05",
+  storageBucket: "beacon-pa05.firebasestorage.app",
+  messagingSenderId: "694515167233",
+  appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
+  measurementId: "G-VFPFPL5PD1"
 };
 
 // Initialize Firebase services
