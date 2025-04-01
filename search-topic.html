@@ -280,25 +280,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script type="module">
   // Import Firebase modules
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
-
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-    authDomain: "beacon-73ff8.firebaseapp.com",
-    projectId: "beacon-73ff8",
-    storageBucket: "beacon-73ff8.firebasestorage.app",
-    messagingSenderId: "398593009531",
-    appId: "1:398593009531:web:09358faa7409fa38743fde",
-    measurementId: "G-9RLHSZPCKR"
-  };
+  import { auth, db } from './firebaseconfig.js';
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+  import { doc, getDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
   // Initialize Firebase app
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
   const greetingDisplay = document.getElementById('greetingDisplay');
   const searchInput = document.getElementById('searchInput');
   const educationLevelDropdown = document.getElementById('educationLevel');

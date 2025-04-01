@@ -1,28 +1,12 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { db } from './firebaseconfig.js';
+import { addDoc, collection } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-    authDomain: "beacon-73ff8.firebaseapp.com",
-    projectId: "beacon-73ff8",
-    storageBucket: "beacon-73ff8.firebasestorage.app",
-    messagingSenderId: "398593009531",
-    appId: "1:398593009531:web:09358faa7409fa38743fde",
-    measurementId: "G-9RLHSZPCKR"
-  };
-
-  // Initialize Firebase and Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
   // Dark mode functionality
   const darkModeToggle = document.getElementById('darkModeToggle');
   const body = document.body;
   const courseDropdownRate = document.getElementById('courseInput'); // Course dropdown in rate page
   const courseSearchInputRate = document.getElementById('courseSearchRate'); // Search input in rate page
-
 
   function enableDarkMode() {
     body.classList.add('dark-mode');

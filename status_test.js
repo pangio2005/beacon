@@ -1,20 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import { getFirestore, collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-  authDomain: "beacon-73ff8.firebaseapp.com",
-  projectId: "beacon-73ff8",
-  storageBucket: "beacon-73ff8.firebasestorage.app",
-  messagingSenderId: "398593009531",
-  appId: "1:398593009531:web:09358faa7409fa38743fde",
-  measurementId: "G-9RLHSZPCKR"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+import { auth, db } from './firebaseconfig.js';
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import { collection, getDocs, query, limit } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 async function checkFirebaseStatus() {
   const firebaseStatusElement = document.getElementById('firebase-status');

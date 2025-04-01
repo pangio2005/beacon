@@ -1,22 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
-
-// Firebase configuration (Keep your Firebase config)
-const firebaseConfig = {
-    apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-    authDomain: "beacon-73ff8.firebaseapp.com",
-    projectId: "beacon-73ff8",
-    storageBucket: "beacon-73ff8.firebasestorage.app",
-    messagingSenderId: "398593009531",
-    appId: "1:398593009531:web:09358faa7409fa38743fde",
-    measurementId: "G-9RLHSZPCKR"
-  };
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+import { auth, db } from './firebaseconfig.js';
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const saveSearchButton = document.getElementById('saveSearchBtn');
