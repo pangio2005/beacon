@@ -76,6 +76,15 @@
             </div>
           </div>
 
+          <div class="input-group">
+            <div class="input-wrapper">
+              <i class="fas fa-key input-icon"></i>
+              <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="Confirm Password" maxlength="20"
+                autocomplete="new-password" required>
+              <small class="char-counter"><span id="confirmPasswordCounter">0</span>/20</small>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-primary login-btn">
             <i class="fas fa-user-plus me-2"></i>Create Account
           </button>
@@ -136,10 +145,19 @@
       const major = document.getElementById("floatingMajor").value;
       const email = document.getElementById("floatingEmail").value;
       const password = document.getElementById("floatingPassword").value;
+      const confirmPassword = document.getElementById("floatingConfirmPassword").value;
 
       // Basic validation
-      if (!username || !email || !password) {
+      if (!username || !email || !password || !confirmPassword) {
         successMessage.textContent = "Error: Please fill in all required fields";
+        successMessage.className = "alert alert-danger";
+        successMessage.style.display = "block";
+        return;
+      }
+
+      // Password match validation
+      if (password !== confirmPassword) {
+        successMessage.textContent = "Error: Passwords do not match";
         successMessage.className = "alert alert-danger";
         successMessage.style.display = "block";
         return;
@@ -242,7 +260,8 @@
         { input: 'floatingUniversity', counter: 'universityCounter' },
         { input: 'floatingMajor', counter: 'majorCounter' },
         { input: 'floatingEmail', counter: 'emailCounter' },
-        { input: 'floatingPassword', counter: 'passwordCounter' }
+        { input: 'floatingPassword', counter: 'passwordCounter' },
+        { input: 'floatingConfirmPassword', counter: 'confirmPasswordCounter' }
       ];
 
       inputs.forEach(({ input, counter }) => {

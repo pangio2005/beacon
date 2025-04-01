@@ -1247,3 +1247,65 @@
 [data-bs-theme="dark"] .account-info-row .edit-btn:hover {
   background-color: rgba(79, 70, 229, 0.3);
 }
+
+/* Settings Section */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background-color: rgba(79, 70, 229, 0.05);
+  border-radius: var(--radius-md);
+  transition: all var(--anim-normal);
+}
+
+.settings-row:hover {
+  background-color: rgba(79, 70, 229, 0.1);
+  transform: translateX(4px);
+}
+
+[data-bs-theme="dark"] .settings-row {
+  background-color: rgba(79, 70, 229, 0.1);
+}
+
+[data-bs-theme="dark"] .settings-row:hover {
+  background-color: rgba(79, 70, 229, 0.15);
+}
+
+.settings-label {
+  font-weight: 600;
+  color: var(--text-secondary-light);
+}
+
+[data-bs-theme="dark"] .settings-label {
+  color: var(--text-secondary-dark);
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  transition: all var(--anim-normal);
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+[data-bs-theme="dark"] .btn-danger {
+  background-color: #dc2626;
+}
+
+[data-bs-theme="dark"] .btn-danger:hover {
+  background-color: #b91c1c;
+}
