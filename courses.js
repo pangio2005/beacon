@@ -4,13 +4,13 @@ import { getFirestore, collection, query, where, getDocs } from "https://www.gst
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize Firebase
   const firebaseConfig = {
-    apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-    authDomain: "beacon-73ff8.firebaseapp.com",
-    projectId: "beacon-73ff8",
-    storageBucket: "beacon-73ff8.firebasestorage.app",
-    messagingSenderId: "398593009531",
-    appId: "1:398593009531:web:09358faa7409fa38743fde",
-    measurementId: "G-9RLHSZPCKR"
+    apiKey: "AIzaSyC6S_-Chou9YqPq7w1u-opm6cdd4W0gCXY",
+    authDomain: "beacon-pa05.firebaseapp.com",
+    projectId: "beacon-pa05",
+    storageBucket: "beacon-pa05.firebasestorage.app",
+    messagingSenderId: "694515167233",
+    appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
+    measurementId: "G-VFPFPL5PD1"
   };
   const appFirebase = initializeApp(firebaseConfig);
   const db = getFirestore(appFirebase);

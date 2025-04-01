@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Studybase registration page">
-  <title>studybase</title>
+  <meta name="description" content="beacon registration page">
+  <title>beacon</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
 
       <div class="login-card">
         <div class="login-header">
-          <h1 class="logo">studybase</h1>
+          <h1 class="logo">beacon</h1>
           <p class="subtitle">Create a new account</p>
         </div>
 
@@ -216,5 +216,120 @@
     }
   </style>
 </body>
+
+<!-- Firebase modules -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs, query, where, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC6S_-Chou9YqPq7w1u-opm6cdd4W0gCXY",
+    authDomain: "beacon-pa05.firebaseapp.com",
+    projectId: "beacon-pa05",
+    storageBucket: "beacon-pa05.firebasestorage.app",
+    messagingSenderId: "694515167233",
+    appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
+    measurementId: "G-VFPFPL5PD1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  function showMessage(element, message, type) {
+    element.textContent = message;
+    element.className = `alert alert-${type}`;
+    element.style.display = "block";
+  }
+
+  async function handleRegistration(e) {
+    e.preventDefault();
+    
+    const username = document.getElementById("floatingUsername").value.trim();
+    const university = document.getElementById("floatingUniversity").value.trim();
+    const major = document.getElementById("floatingMajor").value.trim();
+    const email = document.getElementById("floatingEmail").value.trim();
+    const password = document.getElementById("floatingPassword").value;
+    const successMessage = document.getElementById("successMessage");
+    
+    // Basic validation
+    if (!username || !email || !password) {
+      showMessage(successMessage, "Please fill in all required fields", "danger");
+      return;
+    }
+
+    // Show loading state
+    showMessage(successMessage, "Creating your account...", "info");
+    
+    try {
+      // First check if username already exists
+      const usersRef = collection(db, "users");
+      const usernameQuery = query(usersRef, where("username", "==", username));
+      const usernameSnapshot = await getDocs(usernameQuery);
+      
+      if (!usernameSnapshot.empty) {
+        showMessage(successMessage, "Username already taken", "danger");
+        return;
+      }
+
+      // Create user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      await setDoc(doc(db, "users", user.uid), {
+        username: username,
+        university: university || "Not set",
+        major: major || "Not set",
+        email: email,
+        createdAt: new Date(),
+        role: "Student",
+        preferences: {
+          darkMode: false,
+          anonymousMode: false
+        },
+        notifications: {
+          email: true,
+          quizReminders: true,
+          newFeatures: true
+        }
+      });
+      
+      showMessage(successMessage, "Account created! Redirecting to login...", "success");
+      
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 2000);
+      
+    } catch (error) {
+      console.error("Error creating account:", error);
+      let errorMessage = "Unable to create account";
+      
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          errorMessage = "Email already registered";
+          break;
+        case 'auth/invalid-email':
+          errorMessage = "Please enter a valid email";
+          break;
+        case 'auth/weak-password':
+          errorMessage = "Password must be at least 6 characters";
+          break;
+        default:
+          errorMessage = "Unable to create account";
+      }
+      
+      showMessage(successMessage, errorMessage, "danger");
+    }
+  }
+
+  // Form submission handling
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', handleRegistration);
+  }
+</script>
 
 </html>

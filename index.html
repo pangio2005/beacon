@@ -84,12 +84,14 @@
     </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dark mode functionality -->
     <script>
       // Dark mode toggle functionality
       document.addEventListener('DOMContentLoaded', () => {
         const darkModeToggle = document.getElementById('darkModeToggle');
         const htmlElement = document.documentElement;
-        
+
         // Check for saved theme preference or use preferred color scheme
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -124,22 +126,114 @@
           }
         }
       });
+    </script>
+
+    <!-- Firebase modules -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+      import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+      import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+
+      // Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyC6S_-Chou9YqPq7w1u-opm6cdd4W0gCXY",
+        authDomain: "beacon-pa05.firebaseapp.com",
+        projectId: "beacon-pa05",
+        storageBucket: "beacon-pa05.firebasestorage.app",
+        messagingSenderId: "694515167233",
+        appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
+        measurementId: "G-VFPFPL5PD1"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      function showMessage(message, type) {
+        const signInMessage = document.getElementById("signInMessage");
+        signInMessage.textContent = message;
+        signInMessage.className = `alert alert-${type}`;
+        signInMessage.style.display = "block";
+      }
+
+      async function handleLogin(e) {
+        e.preventDefault();
+        
+        const input = document.getElementById("floatingInput").value.trim();
+        const password = document.getElementById("floatingPassword").value;
+        
+        if (!input || !password) {
+          showMessage("Please fill in all fields", "danger");
+          return;
+        }
+
+        try {
+          let email = input;
+          
+          // If input is not an email, try to find the user by username
+          if (!input.includes('@')) {
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, where("username", "==", input));
+            const querySnapshot = await getDocs(q);
+            
+            if (querySnapshot.empty) {
+              showMessage("User not found", "danger");
+              return;
+            }
+            
+            email = querySnapshot.docs[0].data().email;
+          }
+          
+          // Sign in with email and password
+          await signInWithEmailAndPassword(auth, email, password);
+          
+          // Redirect to courses page on successful login
+          window.location.href = "courses.html";
+          
+        } catch (error) {
+          console.error("Error signing in:", error);
+          let errorMessage = "Unable to sign in";
+          
+          switch (error.code) {
+            case 'auth/invalid-email':
+              errorMessage = "Invalid email format";
+              break;
+            case 'auth/user-not-found':
+              errorMessage = "User not found";
+              break;
+            case 'auth/wrong-password':
+              errorMessage = "Incorrect password";
+              break;
+            default:
+              errorMessage = "Unable to sign in";
+          }
+          
+          showMessage(errorMessage, "danger");
+        }
+      }
+
+      // Form submission handling
+      const loginForm = document.getElementById('loginForm');
+      if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+      }
 
       // Character counter functionality
-      document.addEventListener('DOMContentLoaded', () => {
-        const inputs = [
-          { input: 'floatingInput', counter: 'emailCounter' },
-          { input: 'floatingPassword', counter: 'passwordCounter' }
-        ];
+      const inputs = [
+        { input: 'floatingInput', counter: 'emailCounter' },
+        { input: 'floatingPassword', counter: 'passwordCounter' }
+      ];
 
-        inputs.forEach(({ input, counter }) => {
-          const inputElement = document.getElementById(input);
-          const counterElement = document.getElementById(counter);
-          
+      inputs.forEach(({ input, counter }) => {
+        const inputElement = document.getElementById(input);
+        const counterElement = document.getElementById(counter);
+
+        if (inputElement && counterElement) {
           inputElement.addEventListener('input', () => {
             counterElement.textContent = inputElement.value.length;
           });
-        });
+        }
       });
     </script>
 
