@@ -5,13 +5,12 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstati
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
-  authDomain: "beacon-73ff8.firebaseapp.com",
-  projectId: "beacon-73ff8",
-  storageBucket: "beacon-73ff8.firebasestorage.app",
-  messagingSenderId: "398593009531",
-  appId: "1:398593009531:web:09358faa7409fa38743fde",
-  measurementId: "G-9RLHSZPCKR"
+  apiKey: "AIzaSyAjvShhWqOBIrgero2ODtQQtSzWuafmGJw",
+  authDomain: "studybase-data.firebaseapp.com",
+  projectId: "studybase-data",
+  storageBucket: "studybase-data.firebasestorage.app",
+  messagingSenderId: "471482464641",
+  appId: "1:471482464641:web:46fe6cf41e17a24e785080"
 };
 
 // Initialize Firebase services
@@ -27,48 +26,25 @@ if (registerForm) {
 async function handleRegistration(e) {
   e.preventDefault();
   
-  const username = document.getElementById("floatingUsername").value.trim();
-  const university = document.getElementById("floatingUniversity").value.trim();
-  const major = document.getElementById("floatingMajor").value.trim();
-  const email = document.getElementById("floatingEmail").value.trim();
+  const username = document.getElementById("floatingUsername").value;
+  const university = document.getElementById("floatingUniversity").value;
+  const major = document.getElementById("floatingMajor").value;
+  const email = document.getElementById("floatingEmail").value;
   const password = document.getElementById("floatingPassword").value;
   const successMessage = document.getElementById("successMessage");
-  const submitButton = document.querySelector('button[type="submit"]');
   
-  // Disable submit button to prevent double submission
-  submitButton.disabled = true;
-  submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating account...';
-  
-  // Enhanced validation
+  // Basic validation
   if (!username || !email || !password) {
-    showMessage("Please fill in all required fields", "danger");
-    resetSubmitButton();
-    return;
-  }
-
-  // Username validation
-  if (!isValidUsername(username)) {
-    showMessage("Username can only contain letters, numbers, and underscores (3-15 characters)", "danger");
-    resetSubmitButton();
-    return;
-  }
-
-  // Email validation
-  if (!isValidEmail(email)) {
-    showMessage("Please enter a valid email address", "danger");
-    resetSubmitButton();
-    return;
-  }
-
-  // Password validation
-  if (!isValidPassword(password)) {
-    showMessage("Password must be at least 6 characters long and contain at least one number", "danger");
-    resetSubmitButton();
+    successMessage.textContent = "Please fill in all fields";
+    successMessage.style.display = "block";
+    successMessage.style.color = "red";
     return;
   }
 
   // Show loading state
-  showMessage("Creating your account...", "info");
+  successMessage.textContent = "Creating your account...";
+  successMessage.style.display = "block";
+  successMessage.style.color = "black";
   
   try {
     // First check if username already exists
@@ -77,18 +53,9 @@ async function handleRegistration(e) {
     const usernameSnapshot = await getDocs(usernameQuery);
     
     if (!usernameSnapshot.empty) {
-      showMessage("Username already taken", "danger");
-      resetSubmitButton();
-      return;
-    }
-
-    // Check if email already exists
-    const emailQuery = query(usersRef, where("email", "==", email));
-    const emailSnapshot = await getDocs(emailQuery);
-    
-    if (!emailSnapshot.empty) {
-      showMessage("Email already registered", "danger");
-      resetSubmitButton();
+      successMessage.textContent = "Username already taken";
+      successMessage.style.color = "red";
+      successMessage.style.display = "block";
       return;
     }
 
@@ -114,7 +81,9 @@ async function handleRegistration(e) {
       }
     });
     
-    showMessage("Account created successfully! Redirecting to login...", "success");
+    successMessage.textContent = "Account created! Redirecting to login...";
+    successMessage.style.color = "green";
+    successMessage.style.display = "block";
     
     setTimeout(() => {
       window.location.href = "index.html";
@@ -134,50 +103,14 @@ async function handleRegistration(e) {
       case 'auth/weak-password':
         errorMessage = "Password must be at least 6 characters";
         break;
-      case 'auth/network-request-failed':
-        errorMessage = "Network error. Please check your connection";
-        break;
-      case 'auth/too-many-requests':
-        errorMessage = "Too many attempts. Please try again later";
-        break;
-      case 'auth/internal-error':
-        errorMessage = "An error occurred. Please try again";
-        break;
       default:
-        errorMessage = "Unable to create account. Please try again";
+        errorMessage = "Unable to create account";
     }
     
-    showMessage(errorMessage, "danger");
-  } finally {
-    resetSubmitButton();
+    successMessage.textContent = errorMessage;
+    successMessage.style.color = "red";
+    successMessage.style.display = "block";
   }
-}
-
-function showMessage(message, type) {
-  const successMessage = document.getElementById("successMessage");
-  successMessage.textContent = message;
-  successMessage.className = `alert alert-${type}`;
-  successMessage.style.display = "block";
-}
-
-function resetSubmitButton() {
-  const submitButton = document.querySelector('button[type="submit"]');
-  submitButton.disabled = false;
-  submitButton.innerHTML = '<i class="fas fa-user-plus me-2"></i>Create Account';
-}
-
-function isValidUsername(username) {
-  const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
-  return usernameRegex.test(username);
-}
-
-function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-function isValidPassword(password) {
-  return password.length >= 6 && /\d/.test(password);
 }
 
 // Auth state observer
