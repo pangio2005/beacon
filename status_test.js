@@ -19,7 +19,7 @@ const auth = getAuth(app);
 async function checkFirebaseStatus() {
   const firebaseStatusElement = document.getElementById('firebase-status');
   try {
-    await signInWithEmailAndPassword(auth, 'studybaseuser@gmail.com', 'studybaseuser');
+    await signInWithEmailAndPassword(auth, 'beaconuser@gmail.com', 'beaconuser');
     firebaseStatusElement.textContent = 'Operational';
     firebaseStatusElement.className = 'status ok';
     firebaseStatusElement.classList.remove('error');
@@ -277,7 +277,7 @@ async function checkHistorySavingStatus() {
         // Also, verify that we can access the Firestore features
         
         // First verify if Firebase Auth is working (we already have this check in checkFirebaseStatus())
-        await signInWithEmailAndPassword(auth, 'studybaseuser@gmail.com', 'studybaseuser');
+        await signInWithEmailAndPassword(auth, 'beaconuser@gmail.com', 'beaconuser');
         
         // If we made it here, Firebase is operational
         historyStatusElement.textContent = 'Operational';
