@@ -1,8 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, updateDoc, addDoc, collection, getDocs, setDoc, query, where } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M",
   authDomain: "beacon-73ff8.firebaseapp.com",
@@ -17,6 +19,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
+const analytics = getAnalytics(app);
 
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
@@ -384,7 +388,6 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const user = auth.currentUser;
         if (user) {
-          const storage = getStorage();
           const storageRef = ref(storage, `profile_photos/${user.uid}`);
           await uploadBytes(storageRef, file);
           const photoURL = await getDownloadURL(storageRef);
