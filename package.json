@@ -1,9 +1,0 @@
-{
-  "name": "beacon",
-  "version": "1.0.0",
-  "description": "Study platform",
-  "main": "index.js",
-  "dependencies": {
-    "ratemyprofessor-api": "^1.2.1"
-  }
-} 
