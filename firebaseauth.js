@@ -24,31 +24,30 @@ const analytics = getAnalytics(app);
 
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
-  registerForm.addEventListener("submit", handleRegistration);
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    await handleRegistration(e);
+  });
 }
 
 async function handleRegistration(e) {
   e.preventDefault();
   
-  const username = document.getElementById("floatingUsername").value;
-  const university = document.getElementById("floatingUniversity").value;
-  const major = document.getElementById("floatingMajor").value;
-  const email = document.getElementById("floatingEmail").value;
+  const username = document.getElementById("floatingUsername").value.trim();
+  const university = document.getElementById("floatingUniversity").value.trim();
+  const major = document.getElementById("floatingMajor").value.trim();
+  const email = document.getElementById("floatingEmail").value.trim();
   const password = document.getElementById("floatingPassword").value;
   const successMessage = document.getElementById("successMessage");
   
   // Basic validation
   if (!username || !email || !password) {
-    successMessage.textContent = "Please fill in all fields";
-    successMessage.style.display = "block";
-    successMessage.style.color = "red";
+    showMessage(successMessage, "Please fill in all required fields", "danger");
     return;
   }
 
   // Show loading state
-  successMessage.textContent = "Creating your account...";
-  successMessage.style.display = "block";
-  successMessage.style.color = "black";
+  showMessage(successMessage, "Creating your account...", "info");
   
   try {
     // First check if username already exists
@@ -57,9 +56,7 @@ async function handleRegistration(e) {
     const usernameSnapshot = await getDocs(usernameQuery);
     
     if (!usernameSnapshot.empty) {
-      successMessage.textContent = "Username already taken";
-      successMessage.style.color = "red";
-      successMessage.style.display = "block";
+      showMessage(successMessage, "Username already taken", "danger");
       return;
     }
 
@@ -85,9 +82,7 @@ async function handleRegistration(e) {
       }
     });
     
-    successMessage.textContent = "Account created! Redirecting to login...";
-    successMessage.style.color = "green";
-    successMessage.style.display = "block";
+    showMessage(successMessage, "Account created! Redirecting to login...", "success");
     
     setTimeout(() => {
       window.location.href = "index.html";
@@ -111,9 +106,15 @@ async function handleRegistration(e) {
         errorMessage = "Unable to create account";
     }
     
-    successMessage.textContent = errorMessage;
-    successMessage.style.color = "red";
-    successMessage.style.display = "block";
+    showMessage(successMessage, errorMessage, "danger");
+  }
+}
+
+function showMessage(element, message, type) {
+  if (element) {
+    element.textContent = message;
+    element.className = `alert alert-${type}`;
+    element.style.display = "block";
   }
 }
 
