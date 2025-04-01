@@ -1,5 +1,5 @@
 async function genTest(query, difficulty = 'medium', educationLevel = 'university12', shortAnswerCount = 5, multipleChoiceCount = 5, timeLimit = 10) {
-  const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+  const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
   const mcCount = parseInt(multipleChoiceCount);
   const SACount = parseInt(shortAnswerCount);
   const finalmCCount = mcCount < 0 ? 0 : (mcCount > 20 ? 20 : mcCount);
@@ -381,7 +381,7 @@ async function submitTest(event) {
     });
   });
 
-  const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+  const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
 
   for (const [index, qBox] of saQuestions.entries()) {
     const studentAnswer = form.querySelector(`textarea[name="saq${index}"]`).value;

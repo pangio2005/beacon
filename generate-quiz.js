@@ -1,5 +1,5 @@
 async function genQuiz(query, questionCount = 5, difficulty = 'medium', educationLevel = 'university12') {
-  const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+  const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
   const count = parseInt(questionCount);
   const finalCount = isNaN(count) || count < 1 ? 1 : (count > 20 ? 20 : count);
   
@@ -95,7 +95,7 @@ async function genQuiz(query, questionCount = 5, difficulty = 'medium', educatio
 }
 
 async function genAns(query, difficulty, educationLevel) {
-  const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+  const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
   
   let levelText = '';
   switch(educationLevel) {

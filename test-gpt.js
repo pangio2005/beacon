@@ -1,4 +1,4 @@
-const apiKey = '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'; 
+const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M'; 
 const chatBox = document.getElementById('chat-box');
 const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');

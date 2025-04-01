@@ -1,7 +1,7 @@
 async function generateFlashcards(topic, cardCount = 10, educationLevel = 'university12') {
   console.log('Starting flashcard generation with:', { topic, cardCount, educationLevel });
   
-  const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+  const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
   const count = Math.min(Math.max(parseInt(cardCount) || 10, 1), 20);
   
   // Map education level to descriptive text

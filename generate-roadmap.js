@@ -129,7 +129,7 @@ async function generateRoadmapContent(query, level, topicCount) {
   `;
 
   try {
-    const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+    const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -382,7 +382,7 @@ async function fetchTopicDetails(mainTopic, subtopic, level) {
   `;
 
   try {
-    const apiKey = 'AIzaSyAJJQLYD2wHZu49VgCIzbAuc2XBWFtCBJA';
+    const apiKey = 'AIzaSyDv3GPF3uTDURd704A4M68H7T91Ygfik-M';
     const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
