@@ -1,9 +1,6 @@
 {
-  "name": "studybase",
-  "version": "1.0.0",
-  "description": "Study platform with RateMyProfessor integration",
-  "main": "index.js",
-  "dependencies": {
-    "ratemyprofessor-api": "^1.2.1"
-  }
+  "name": "beacon",
+  "version": "1.2.0",
+  "description": "Study platform",
+  "main": "index.js"
 } 

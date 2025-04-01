@@ -1,3 +1,5 @@
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyC6S_-Chou9YqPq7w1u-opm6cdd4W0gCXY",
   authDomain: "beacon-pa05.firebaseapp.com",
@@ -5,7 +7,6 @@ const firebaseConfig = {
   storageBucket: "beacon-pa05.firebasestorage.app",
   messagingSenderId: "694515167233",
   appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
-  measurementId: "G-VFPFPL5PD1"
 };
   
   firebase.initializeApp(firebaseConfig);

@@ -1,5 +1,5 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
 
 document.addEventListener('DOMContentLoaded', function() {
   // Initialize Firebase
@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     storageBucket: "beacon-pa05.firebasestorage.app",
     messagingSenderId: "694515167233",
     appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
-    measurementId: "G-VFPFPL5PD1"
   };
   
   const appFirebase = initializeApp(firebaseConfig);

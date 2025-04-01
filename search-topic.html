@@ -273,9 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script type="module">
   // Import Firebase modules
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-analytics.js";
 
   // Firebase configuration
   const firebaseConfig = {
@@ -285,7 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
     storageBucket: "beacon-pa05.firebasestorage.app",
     messagingSenderId: "694515167233",
     appId: "1:694515167233:web:4997c08a2f4af97ef7d000",
-    measurementId: "G-VFPFPL5PD1"
   };
 
   // Initialize Firebase app
