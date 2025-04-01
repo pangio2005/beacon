@@ -164,6 +164,15 @@
           });
         }
       });
+
+      // Form submission handling
+      const registerForm = document.getElementById('registerForm');
+      if (registerForm) {
+        registerForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          handleRegistration(e);
+        });
+      }
     });
   </script>
 
