@@ -21,7 +21,6 @@
         <a href="search-topic.html"><i class="fas fa-search"></i> Search</a>
         <a href="quiz.html"><i class="fas fa-book"></i> Study</a>
         <a href="communities.html"><i class="fas fa-comments"></i> Forums</a>
-        <a href="courses.html"><i class="fas fa-graduation-cap"></i> Courses</a>
         <a href="history.html"><i class="fas fa-book-open"></i> Library</a>
         <a href="friends.html"><i class="fas fa-user-friends"></i> Friends</a>
         <a href="account.html" class="active"><i class="fas fa-user"></i> Account</a>
@@ -84,20 +83,6 @@
                 <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#changeMajorModal">
                   <i class="fas fa-edit"></i>
                 </button>
-              </div>
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <span class="stat-value" id="topicsSearched">0</span>
-                  <span class="stat-label">Topics</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value" id="studyToolsUsed">0</span>
-                  <span class="stat-label">Study Tools</span>
-                </div>
-                <div class="stat-item">
-                  <span class="stat-value" id="coursesEnrolled">0</span>
-                  <span class="stat-label">Courses</span>
-                </div>
               </div>
               <div class="info-item">
                 <span class="info-label">Last Login</span>
@@ -279,6 +264,42 @@
     </div>
   </div>
 
+<div class="modal fade" id="changeBioModal" tabindex="-1" aria-labelledby="changeBioModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changeBioModalLabel">Update Bio</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="changeBioForm">
+          <div class="mb-3">
+            <label for="newBio" class="form-label">New Bio</label>
+            <div class="input-wrapper">
+              <textarea class="form-control" id="newBio" required autocomplete="off" maxlength="50" rows="3"></textarea>
+              <small class="char-counter"><span id="bioModalCounter">0</span>/50</small>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-save">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bio-section">
+  <div class="bio-container">
+    <textarea id="userBio" maxlength="50" placeholder="Add a bio (max 50 characters)" readonly></textarea>
+    <button class="edit-btn" data-bs-toggle="modal" data-bs-target="#changeBioModal">
+      <i class="fas fa-edit"></i>
+    </button>
+  </div>
+</div>
+
   <!-- Add Change Major Modal -->
   <div class="modal fade" id="changeMajorModal" tabindex="-1" aria-labelledby="changeMajorModalLabel"
     aria-hidden="true">
@@ -404,8 +425,46 @@
         { input: 'newMajor', counter: 'majorModalCounter' },
         { input: 'currentPassword', counter: 'currentPasswordCounter' },
         { input: 'newPassword', counter: 'newPasswordCounter' },
-        { input: 'confirmPassword', counter: 'confirmPasswordCounter' }
+        { input: 'confirmPassword', counter: 'confirmPasswordCounter' },
+        { input: 'newBio', counter: 'bioModalCounter' }
+        
       ];
+
+  const changeBioForm = document.getElementById("changeBioForm");
+  if (changeBioForm) {
+    changeBioForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const newBio = document.getElementById("newBio").value;
+
+      try {
+        const user = auth.currentUser;
+        if (user) {
+          await updateUserProfile(user.uid, { bio: newBio });
+          const bioElement = document.getElementById("userBio");
+          if (bioElement) bioElement.value = newBio;
+
+          const modal = bootstrap.Modal.getInstance(document.getElementById('changeBioModal'));
+          if (modal) modal.hide();
+
+          displayStatusMessage("Bio updated successfully!", true);
+          changeBioForm.reset();
+        }
+      } catch (error) {
+        console.error("Error updating bio:", error);
+        displayStatusMessage("Unable to update bio", false);
+      }
+    });
+  }
+  
+  // Populate bio in the modal when it opens
+  const bioModal = document.getElementById('changeBioModal');
+  if (bioModal) {
+    bioModal.addEventListener('show.bs.modal', function () {
+      const currentBio = document.getElementById('userBio').value;
+      document.getElementById('newBio').value = currentBio;
+      document.getElementById('bioModalCounter').textContent = currentBio.length;
+    });
+  }
 
       modalInputs.forEach(({ input, counter }) => {
         const inputElement = document.getElementById(input);
@@ -629,6 +688,40 @@
         }
       });
     });
+
+    const darkModeToggle = document.getElementById('darkModeToggle');
+      const htmlElement = document.documentElement;
+      const darkIcon = document.querySelector('.dark-icon');
+      const lightIcon = document.querySelector('.light-icon');
+      
+      // Check for saved theme preference or use preferred color scheme
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        htmlElement.setAttribute('data-bs-theme', 'dark');
+        darkIcon.style.display = 'none';
+        lightIcon.style.display = 'block';
+      } else {
+        htmlElement.setAttribute('data-bs-theme', 'light');
+        darkIcon.style.display = 'block';
+        lightIcon.style.display = 'none';
+      }
+      
+      darkModeToggle.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        htmlElement.setAttribute('data-bs-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        if (newTheme === 'dark') {
+          darkIcon.style.display = 'none';
+          lightIcon.style.display = 'block';
+        } else {
+          darkIcon.style.display = 'block';
+          lightIcon.style.display = 'none';
+        }
+      });
+
   </script>
 
   <footer class="footer">
@@ -636,47 +729,6 @@
       <p class="mb-0">&copy; 2025 beacon</p>
     </div>
   </footer>
-
-  <style>
-    .input-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .form-control {
-      height: 48px;
-      padding: 0 45px 0 12px;
-      border-radius: 8px;
-    }
-
-    .char-counter {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #6b7280;
-      font-size: 0.75rem;
-      pointer-events: none;
-    }
-
-    /* Modal styling */
-    .modal-content {
-      background-color: var(--bs-body-bg);
-      border: 1px solid var(--bs-border-color);
-    }
-
-    .modal-header {
-      border-bottom: 1px solid var(--bs-border-color);
-    }
-
-    .modal-body {
-      background-color: var(--bs-body-bg);
-    }
-
-    .modal-backdrop {
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-  </style>
 </body>
 
 </html>

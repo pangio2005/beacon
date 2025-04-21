@@ -1309,3 +1309,73 @@
 [data-bs-theme="dark"] .btn-danger:hover {
   background-color: #b91c1c;
 }
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form-control {
+  height: 48px;
+  padding: 0 45px 0 12px;
+  border-radius: 8px;
+}
+
+.char-counter {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+/* Modal styling */
+.modal-content {
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.modal-body {
+  background-color: var(--bs-body-bg);
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.bio-section {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.bio-container {
+  position: relative;
+  width: 100%;
+}
+
+#userBio {
+  width: 100%;
+  min-height: 60px;
+  padding: 8px 30px 8px 12px;
+  border-radius: 8px;
+  resize: none;
+  border: 1px solid var(--bs-border-color);
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.bio-container .edit-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: none;
+  border: none;
+  color: var(--bs-primary);
+  cursor: pointer;
+}

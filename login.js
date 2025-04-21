@@ -46,22 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } 
     
     catch (error) {
-      let errorMessage = "Please check your login details and try again.";
-
-      switch (error.code) {
-        case 'auth/user-not-found':
-          errorMessage = "Account not found.";
-          break;
-        case 'auth/wrong-password':
-          errorMessage = "Incorrect password.";
-          break;
-        case 'auth/invalid-email':
-          errorMessage = "Please enter a valid email.";
-          break;
-        default:
-          errorMessage = error.message;
-      }
-
+      let errorMessage = "Invalid email or password";
       signInMessage.style.display = 'block';
       signInMessage.textContent = errorMessage;
     }
